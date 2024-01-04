@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <title>The Great Number Game</title>
+</head>
+<body>
+    <style>
+        .result_box {
+            height: 200px;
+            width: 200px;
+            border: 3px black;
+        }
+        
+        .result_box p {
+            color: white;
+            font-size: 18px;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        
+    </style>
+    <div class="container d-flex flex-column align-items-center">
+        <p class="h1">Welcome to the great number game!</p>
+        <p class="h3">I'm thinking of a number between 1 and 100</p>
+        <p class="h3">Take a guess!</p>
+        {% if session['guess']%}
+            <div class="row row-cols-1">
+                <div class="col">
+                    {% if session['guess'] == session['secret_number'] %}
+                        <style>
+                            .result_box {
+                                background-color: green;
+                            }
+                        </style>
+                    {% else %}
+                        <style>
+                            .result_box {
+                                background-color: red;
+                            }
+                        </style>
+                    {% endif %}
+                    <div class="col text-center text-align-middle result_box">
+                        <p >{{session['high_or_low']}}</p>
+                        {% if session['guess'] == session['secret_number'] or session['num_of_guesses'] >= 5%}
+                        <form action="/destroy_session" method="post">
+                            <button type="btn submit"> Reset Game </button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if session['is_correct'] == False %}
+        <form action="/submit_guess" method="POST">
+            <div class="row">
+                <div class="col">
+                    <label for="guess">Put your guess here, friend...
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="text" name="guess">
+                </div>
+            </div>
+            <div class="row">
+                <button class='col mt-2' type="btn submit"> Submit </button>
+            </div>
+        </form>
+        {% endif %}
+        <form action="/destroy_session" method="post">
+            <button type="btn submit"> Reset Game </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

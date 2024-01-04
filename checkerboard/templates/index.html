@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkerboard</title>
+    <style>
+        
+        .color1 {
+            background-color: black;
+            height: 50px;
+            width: 50px;
+        }
+        .color2 {
+            background-color: {{ color }};
+            height: 50px;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Checkerboard</h1>
+    <table>
+        {% for y_count in range(0, y): %}
+        <tr>
+            {% for x_count in range(0, x ): %}
+            <td class="color{{ (x_count + y_count) % 2 + 1 }}"></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
